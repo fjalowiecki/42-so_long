@@ -6,10 +6,14 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:52:41 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/07/16 15:19:16 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:40:07 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/**
+ * @file map_validation.c
+ * @brief Validates the game map for 'so_long'.
+ */
 #include "so_long.h"
 
 static int		check_if_map_is_rectangle(t_data *data);
@@ -17,6 +21,13 @@ static int		check_if_map_is_closed(t_data *data);
 static int		check_objects(t_data *data);
 static void		save_initial_player_and_exit_positions(t_data *data);
 
+/**
+ * @brief Main function to process and validate the game map.
+ * 
+ * Calls other validation functions and sets initial game state.
+ * 
+ * @param data Game data including the map.
+ */
 void	process_and_validate_map(t_data *data)
 {
 	char	**map_grid_ptr;
@@ -26,7 +37,6 @@ void	process_and_validate_map(t_data *data)
 	data->map->height = 0;
 	while (*map_grid_ptr++ != NULL)
 		data->map->height++;
-
 	if (check_if_map_is_rectangle(data) == FAIL)
 		msg_err_and_exit(data, ERR_NO_RECT);
 	if (check_if_map_is_closed(data))
@@ -38,6 +48,12 @@ void	process_and_validate_map(t_data *data)
 	save_initial_player_and_exit_positions(data);
 }
 
+/**
+ * @brief Validates the map's shape as a rectangle.
+ * 
+ * @param data Game data including the map.
+ * @return SUCCESS or FAIL.
+ */
 static int	check_if_map_is_rectangle(t_data *data)
 {
 	char	**map_grid_ptr;
@@ -52,6 +68,12 @@ static int	check_if_map_is_rectangle(t_data *data)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Checks if the map is enclosed by walls.
+ * 
+ * @param data Game data including the map.
+ * @return SUCCESS or FAIL.
+ */
 static int	check_if_map_is_closed(t_data *data)
 {
 	char	**map_grid;
@@ -81,6 +103,14 @@ static int	check_if_map_is_closed(t_data *data)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Validates the presence and count of essential objects.
+ * 
+ * Ensures there's at least one collectable and exactly one player and exit.
+ * 
+ * @param data Game data including the map.
+ * @return SUCCESS or FAIL.
+ */
 static int	check_objects(t_data *data)
 {
 	char	**map_grid_ptr;
@@ -110,6 +140,11 @@ static int	check_objects(t_data *data)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Saves initial positions of the player and the exit.
+ * 
+ * @param data Game data including the map.
+ */
 static void	save_initial_player_and_exit_positions(t_data *data)
 {
 	int		x;
@@ -137,6 +172,3 @@ static void	save_initial_player_and_exit_positions(t_data *data)
 	}
 	data->map->player_moves_cnt = 0;
 }
-
-
-

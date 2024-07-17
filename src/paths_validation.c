@@ -6,10 +6,14 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:01:05 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/07/16 15:19:49 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:39:43 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/**
+ * @file paths_validation.c
+ * @brief Validates if all objects are reachable in the 'so_long' game map.
+ */
 #include "so_long.h"
 
 static int	check_this_obj_being_reachable(char **map_grid_ptr,
@@ -19,6 +23,16 @@ static void	check_path_to_exit(char **map_grid_ptr, t_pnt_data *pnt_data,
 				t_point now_pnt);
 static int	pnt_already_visited(t_pnt_data *pnt_data, t_point now_pnt);
 
+/**
+ * @brief Checks if all 'P' and 'C' objects are reachable from any point.
+ * 
+ * Iterates through the map to find 'P' (player) and 'C' (collectable) objects
+ * and checks if they are reachable - meaning that a path between object
+ * and 'E' (exit) exists. If any object is not reachable, returns FAIL.
+ * 
+ * @param data Game data including the map.
+ * @return SUCCESS if all objects are reachable, FAIL otherwise.
+ */
 int	check_if_all_obj_are_reachable(t_data *data)
 {
 	char		**map_grid_ptr;
@@ -48,13 +62,21 @@ int	check_if_all_obj_are_reachable(t_data *data)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Initializes point data for path validation.
+ * 
+ * Allocates memory for tracking visited points and sets initial directions
+ * for movement.
+ * 
+ * @param data Game data including the map.
+ * @param pnt_data Structure to hold point data for validation.
+ */
 static void	populate_pnt_data(t_data *data, t_pnt_data *pnt_data)
 {
 	pnt_data->visited_pnts = (t_point *)malloc(sizeof(t_point)
 			* data->map->height * data->map->width);
 	if (!pnt_data->visited_pnts)
 		msg_err_and_exit(data, ERR_MALLOC);
-
 	pnt_data->new_pnt_dir[0].x = -1;
 	pnt_data->new_pnt_dir[0].y = 0;
 	pnt_data->new_pnt_dir[1].x = 0;
@@ -65,6 +87,18 @@ static void	populate_pnt_data(t_data *data, t_pnt_data *pnt_data)
 	pnt_data->new_pnt_dir[3].y = 1;
 }
 
+/**
+ * @brief Checks if a specific object is reachable from its position.
+ * 
+ * Starts from the object's position and attempts to find a path to the exit.
+ * If a path is found, sets the path_exists_flag to SUCCESS.
+ * 
+ * @param map_grid_ptr Pointer to the map grid.
+ * @param pnt_data Structure holding point data for validation.
+ * @param x X-coordinate of the object.
+ * @param y Y-coordinate of the object.
+ * @return SUCCESS if the object is reachable, FAIL otherwise.
+ */
 static int	check_this_obj_being_reachable(char **map_grid_ptr,
 				t_pnt_data *pnt_data, int x, int y)
 {
@@ -83,6 +117,16 @@ static int	check_this_obj_being_reachable(char **map_grid_ptr,
 	return (SUCCESS);
 }
 
+/**
+ * @brief Recursively checks for a path to the exit from the current point.
+ * 
+ * Explores adjacent points (not walls) that haven't been visited. Marks the
+ * exit as found if reached.
+ * 
+ * @param map_grid_ptr Pointer to the map grid.
+ * @param pnt_data Structure holding point data for validation.
+ * @param now_pnt Current point being checked.
+ */
 static void	check_path_to_exit(char **map_grid_ptr,
 					t_pnt_data *pnt_data, t_point now_pnt)
 {
@@ -112,6 +156,15 @@ static void	check_path_to_exit(char **map_grid_ptr,
 	}
 }
 
+/**
+ * @brief Checks if a point has already been visited during path validation.
+ * 
+ * Compares the current point against the list of visited points.
+ * 
+ * @param pnt_data Structure holding point data for validation.
+ * @param now_pnt Current point being checked.
+ * @return 1 if the point has been visited, 0 otherwise.
+ */
 static int	pnt_already_visited(t_pnt_data *pnt_data, t_point now_pnt)
 {
 	size_t	i;

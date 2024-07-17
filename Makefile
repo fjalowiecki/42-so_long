@@ -6,7 +6,7 @@
 #    By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/13 14:20:27 by fjalowie          #+#    #+#              #
-#    Updated: 2024/07/16 15:17:13 by fjalowie         ###   ########.fr        #
+#    Updated: 2024/07/17 10:38:53 by fjalowie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ OBJS	= ${SRCS:.c=.o}
 
 CC		= gcc
 
-CFLAGS	= -Wall -Wextra -Werror -I include/ -g
+# CFLAGS = -I include/ -g
+CFLAGS	= -Wall -Wextra -Werror -I include/
 LDFLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
 
 $(NAME): $(OBJS)

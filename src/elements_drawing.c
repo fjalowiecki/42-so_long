@@ -6,14 +6,23 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:50:38 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/07/16 14:02:29 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:42:44 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/**
+ * @file elements_drawing.c
+ * @brief Functions for drawing game elements in 'so_long'.
+ */
 #include "so_long.h"
 
 static void	draw_element(t_data *data, int y, int x);
 
+/**
+ * @brief Loads textures for game elements from files.
+ * 
+ * @param data Pointer to the game data structure.
+ */
 void	load_textures(t_data *data)
 {
 	int	width;
@@ -22,20 +31,27 @@ void	load_textures(t_data *data)
 	data->textures[0] = mlx_xpm_file_to_image(data->mlx_ptr,
 			"assets-64/bg.xpm", &width, &height);
 	data->textures[1] = mlx_xpm_file_to_image(data->mlx_ptr,
-			"assets-64/wall-1.xpm", &width, &height);
+			"assets-64/wall.xpm", &width, &height);
 	data->textures[2] = mlx_xpm_file_to_image(data->mlx_ptr,
 			"assets-64/item.xpm", &width, &height);
 	data->textures[3] = mlx_xpm_file_to_image(data->mlx_ptr,
-			"assets-64/player.xpm", &width, &height);
+			"assets-64/hero.xpm", &width, &height);
 	data->textures[4] = mlx_xpm_file_to_image(data->mlx_ptr,
 			"assets-64/exit.xpm", &width, &height);
 	data->textures[5] = mlx_xpm_file_to_image(data->mlx_ptr,
-			"assets-64/wall-2.xpm", &width, &height);
+			"assets-64/exit_open.xpm", &width, &height);
 	data->textures[6] = mlx_xpm_file_to_image(data->mlx_ptr,
-			"assets-64/gameover.xpm", &width, &height);
+			"assets-64/endofgame.xpm", &width, &height);
 	data->textures[7] = NULL;
 }
 
+/**
+ * @brief Draws static elements on the game map.
+ * 
+ * Iterates through the map grid and calls draw_element for each cell.
+ * 
+ * @param data Pointer to the game data structure.
+ */
 void	draw_static_elements(t_data *data)
 {
 	char	**map_grid_ptr;
@@ -56,6 +72,15 @@ void	draw_static_elements(t_data *data)
 	}
 }
 
+/**
+ * @brief Draws an individual element on the game window.
+ * 
+ * Selects the appropriate texture based on the map element and draws it.
+ * 
+ * @param data Pointer to the game data structure.
+ * @param y Y-coordinate of the element in the map grid.
+ * @param x X-coordinate of the element in the map grid.
+ */
 static void	draw_element(t_data *data, int y, int x)
 {
 	char	**map_grid_ptr;

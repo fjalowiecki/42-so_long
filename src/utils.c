@@ -6,13 +6,21 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:13:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/07/16 15:14:20 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/07/17 12:06:21 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/**
+ * @file utils.c
+ * @brief Utility functions for 'so_long' game.
+ */
 #include "so_long.h"
 
-
+/**
+ * @brief Exits the game and frees resources on error.
+ * @param data Game data structure.
+ * @param err Error message.
+ */
 void	msg_err_and_exit(t_data *data, char *err)
 {
 	if (data->map->map_grid != NULL)
@@ -24,10 +32,15 @@ void	msg_err_and_exit(t_data *data, char *err)
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
 	}
-	perror(err);
+	write(2, err, ft_strlen(err));
+	write(2, "\n", 1);
 	exit(EXIT_FAILURE);
 }
 
+/**
+ * @brief Frees the memory allocated for the map grid.
+ * @param data Game data structure.
+ */
 void	free_map_grid(t_data *data)
 {
 	char	**map_grid_ptr;
@@ -42,6 +55,10 @@ void	free_map_grid(t_data *data)
 	data->map->map_grid = NULL;
 }
 
+/**
+ * @brief Frees loaded textures.
+ * @param data Game data structure.
+ */
 void	free_textures(t_data *data)
 {
 	int	i;
@@ -54,6 +71,11 @@ void	free_textures(t_data *data)
 	}
 }
 
+/**
+ * @brief Converts an integer to a string.
+ * @param n Integer to convert.
+ * @return String representation of n.
+ */
 char	*ft_itoa(int n)
 {
 	char	*str;
@@ -82,6 +104,11 @@ char	*ft_itoa(int n)
 	return (str);
 }
 
+/**
+ * @brief Calculates the length of a string.
+ * @param s String to measure.
+ * @return Length of s.
+ */
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;

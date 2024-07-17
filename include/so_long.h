@@ -6,10 +6,15 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 15:50:07 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/07/16 15:13:36 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:45:52 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/**
+ * @file so_long.h
+ * @brief Header file for the game.
+ * 
+ */
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
@@ -26,11 +31,11 @@
 
 # define BUFFER_SIZE 4096
 # define TILE_SIZE   64
-# define GAME_TITLE  "crystal chaser"
+# define GAME_TITLE  "chest chaser"
 
 # define ERR_MALLOC "Error\nMemory allocation failed"
 # define ERR_FILE "Error\nCannot open/read map file"
-# define ERR_NO_FILE_PATH "Error\nPath to map file is missing"
+# define ERR_NO_FILE_PATH "Error\nPath to map file is incorrect"
 # define ERR_NO_RECT "Error\nMap is not a rectangle"
 # define ERR_NO_ITEMS "Error\nCollectibles, player position or exit are missing"
 # define ERR_UNDEF_ITEM "Error\nMap contains undefined item"

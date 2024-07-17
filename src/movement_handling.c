@@ -6,10 +6,14 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:15:19 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/07/16 14:51:17 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:48:20 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/**
+ * @file movement_handling.c
+ * @brief Handles player movement and interactions in 'so_long'.
+ */
 #include "so_long.h"
 
 static int		check_next_move(t_data *data, t_point next_pos);
@@ -17,6 +21,15 @@ static void		update_and_draw_new_player_position(t_data *data, int keysym);
 static t_point	calc_next_player_position(t_point current_pos, int keysym);
 static void		display_player_moves_count(t_data *data);
 
+/**
+ * @brief Handles key press events for player movement.
+ * 
+ * Processes player movement based on key press. Exits game if ESC is pressed.
+ * 
+ * @param keysym Key symbol of the pressed key.
+ * @param data Game data including the map and player position.
+ * @return Always returns SUCCESS.
+ */
 int	on_keypress(int keysym, t_data *data)
 {
 	t_point	next_pos;
@@ -35,6 +48,13 @@ int	on_keypress(int keysym, t_data *data)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Calculates the next player position based on key press.
+ * 
+ * @param current_pos Current position of the player.
+ * @param keysym Key symbol of the pressed key.
+ * @return The calculated next position of the player.
+ */
 static t_point	calc_next_player_position(t_point current_pos, int keysym)
 {
 	if (keysym == 65363)
@@ -48,6 +68,16 @@ static t_point	calc_next_player_position(t_point current_pos, int keysym)
 	return (current_pos);
 }
 
+/**
+ * @brief Checks if the next move is valid and updates game state.
+ * 
+ * Validates the next move based on the game map and updates collectables count
+ * and exit state if necessary.
+ * 
+ * @param data Game data including the map and player position.
+ * @param next_pos The next position of the player.
+ * @return SUCCESS if move is valid, FAIL otherwise.
+ */
 static int	check_next_move(t_data *data, t_point next_pos)
 {
 	t_map	*map;
@@ -71,12 +101,18 @@ static int	check_next_move(t_data *data, t_point next_pos)
 		map->collectables_cnt == 0)
 	{
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-			data->textures[6], 0, 0);
+			data->textures[6], ((data->map->width / 2 - 1) * TILE_SIZE), 0);
 		return (FAIL);
 	}
 	return (SUCCESS);
 }
 
+/**
+ * @brief Updates and redraws the player's position on the map.
+ * 
+ * @param data Game data including the map and player position.
+ * @param keysym Key symbol of the pressed key.
+ */
 static void	update_and_draw_new_player_position(t_data *data, int keysym)
 {
 	t_map	*map;
@@ -91,6 +127,11 @@ static void	update_and_draw_new_player_position(t_data *data, int keysym)
 		map->player_pos.y * TILE_SIZE);
 }
 
+/**
+ * @brief Displays the current count of player moves.
+ * 
+ * @param data Game data including the map and player position.
+ */
 static void	display_player_moves_count(t_data *data)
 {
 	char	*message;
