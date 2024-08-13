@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:52:41 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/07/17 10:40:07 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:27:16 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,4 +171,5 @@ static void	save_initial_player_and_exit_positions(t_data *data)
 		y++;
 	}
 	data->map->player_moves_cnt = 0;
+	data->map->game_finished = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 15:50:07 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/07/17 10:45:52 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:07:17 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
-# include "mlx.h"
+# include "../mlx/mlx.h"
 
 # define SUCCESS 0
 # define FAIL -1
@@ -40,7 +40,7 @@
 # define ERR_NO_ITEMS "Error\nCollectibles, player position or exit are missing"
 # define ERR_UNDEF_ITEM "Error\nMap contains undefined item"
 # define ERR_NOT_CLOSED "Error\nMap does not have properly defined borders"
-# define ERR_NO_PATH "Error\nProper path between obj and exit does not exist"
+# define ERR_NO_PATH "Error\nNo correct path between obj and exit on the map"
 # define ERR_MLX "Error\nMlx initialization fail"
 # define ERR_MLX_WIN "Error\nMlx window creation fail"
 
@@ -59,6 +59,7 @@ typedef struct t_map
 	int		player_moves_cnt;
 	t_point	player_pos;
 	t_point	exit_pos;
+	int		game_finished;
 }	t_map;
 
 typedef struct t_data

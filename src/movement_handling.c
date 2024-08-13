@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:15:19 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/07/17 11:48:20 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:38:34 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ int	on_keypress(int keysym, t_data *data)
 
 	if (keysym == 65307)
 		on_destroy(data);
+	if (keysym != 65361 && keysym != 65362
+		&& keysym != 65363 && keysym != 65364)
+		return (FAIL);
+	if (data->map->game_finished == 1)
+		return (FAIL);
 	current_pos = data->map->player_pos;
 	next_pos = calc_next_player_position(current_pos, keysym);
 	if (check_next_move(data, next_pos) == SUCCESS)
@@ -85,6 +90,9 @@ static int	check_next_move(t_data *data, t_point next_pos)
 	map = data->map;
 	if (map->map_grid[next_pos.y][next_pos.x] == '1')
 		return (FAIL);
+	if (map->map_grid[next_pos.y][next_pos.x] == 'E'
+				&& map->collectables_cnt != 0)
+		return (FAIL);
 	else if (map->map_grid[next_pos.y][next_pos.x] == 'C')
 	{
 		map->collectables_cnt--;
@@ -95,14 +103,11 @@ static int	check_next_move(t_data *data, t_point next_pos)
 				data->map->exit_pos.y * TILE_SIZE);
 	}
 	else if (map->map_grid[next_pos.y][next_pos.x] == 'E' &&
-		map->collectables_cnt != 0)
-		return (FAIL);
-	else if (map->map_grid[next_pos.y][next_pos.x] == 'E' &&
 		map->collectables_cnt == 0)
 	{
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 			data->textures[6], ((data->map->width / 2 - 1) * TILE_SIZE), 0);
-		return (FAIL);
+		data->map->game_finished = 1;
 	}
 	return (SUCCESS);
 }
